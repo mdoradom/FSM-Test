@@ -18,11 +18,19 @@ function Update(state)
 		if near(radius) then
 			state = caution.id
 		end
-	elseif state == caution.id then
-		
-		state = alert.id
-		
-		
+	end
+	if state == caution.id then
+		if not near(radius) then
+			state = patrol.id
+		end
+		if visible(dist, fov) then
+			state = alert.id
+		end
+	end
+	if state == alert.id then
+		if not visible(dist, fov) then
+			state = caution.id
+		end
 	end
 	return state
 end
